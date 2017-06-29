@@ -1,0 +1,77 @@
+
+.reveal section img {
+	border: 0;
+	background: transparent;
+}
+
+.reveal section .sources {
+	font-size: 26px;
+}
+
+.reveal .slides > section {
+	width: 80%;
+}
+
+.reveal section h3 {
+	background-color: #ddd;
+	color: #000;
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 30px;
+	text-transform: none;
+	position: relative;
+}
+
+.reveal section h3::after {
+	content: "";
+	position: absolute;
+	top: -70px;
+	right: -150px;
+	background-image: url('../images/logo.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 200px;
+	height: 95px;
+}
+
+.reveal section h4 {
+	text-transform: none;
+}
+
+.reveal section ul li {
+	list-style: none;
+}
+
+.reveal section ul li::before {
+	content: '•';
+	padding-right: 10px;
+	color: #ff5200;
+	font-size: 40px;
+}
+
+.reveal section table {
+    font-size: 80%;
+}
+
+/* Print PDF Fixes */
+
+.print-pdf section {
+	/* TODO: fix */;
+	margin-bottom: 100px;
+}
+
+.print-pdf section h3 {
+	position: initial;
+	background-color: transparent;
+	color: #FFF;
+	padding: 0;
+	margin-bottom: 100px;
+}
+
+.print-pdf section h3::after {
+	display: none;
+}
+
+.print-pdf .reveal .slides section {
+    margin-top: 200px !important;
+}

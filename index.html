@@ -1,0 +1,680 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Multi-tenant frontends using Webpack 2 and AngularJS</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- my presentation slides style fixes -->
+		<link rel="stylesheet" href="css/fixes.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+
+				<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section>
+				<h3>Multi-tenant frontends using Webpack 2 and AngularJS</h3>
+				<p>
+					<small><a href="http://cofinpro.de">Cofinpro</a> / <a href="mailto:svenvowe@gmail.com">Sven Vowé</a></small>
+				</p>
+                <p>
+                    Connect to Slides: <a href="http://127.0.0.1:1947/">http://127.0.0.1:1947/</a>
+                </p>
+			</section>
+
+			<section>
+				<h3>Overview</h3>
+				<ul>
+					<li>Prelude: Frontend Evolution</li>
+					<li>Intro: How and Why?</li>
+					<li>Basic setup</li>
+					<li>Loaders and Chaining</li>
+					<li>Plugins</li>
+					<li>Resolver architecture</li>
+					<li>Webpack and Angular</li>
+					<li>Webpack and Code-Splitting</li>
+					<li>Webpack and Task Runners</li>
+					<li>Multi-tenancy: VisualVest and GenoVest</li>
+					<li>Multi-tenancy: GenoVest bank instances</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Prelude: What does frontend development require?</h3>
+				<ul>
+					<li>Easy project setup</li>
+					<li>Convenient dev environment</li>
+					<li>Tidy project structure</li>
+					<li>Asset optimization (minification, ...)</li>
+					<li>Build a production package for deployment</li>
+					<li>Nice to have: Code analysis, linting, ...</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Prelude: Frontend Dark Age</h3>
+				<ul>
+					<li>flat files (HTML, CSS, JS)</li>
+					<li>Push to server (local or remote)</li>
+					<li>Refresh in browser</li>
+					<li>Development === Server deployment</li>
+				</ul>
+				PHP setup image, LAMP, ...
+			</section>
+
+			<section>
+				<h3>Prelude: Frontend Modern Times</h3>
+				<ul>
+					<li>NodeJS: dev server</li>
+					<li>Grunt Task: SCSS Pipeline</li>
+					<li>Grunt Task: Deployment Toolchain</li>
+				</ul>
+				Grunt und NodeJS images
+			</section>
+
+			<section>
+				<h3>Prelude: Frontend Modern Times</h3>
+				<ul>
+					<li>NodeJS: dev server w/ hot reload</li>
+					<li>Gulp Task: SCSS Pipeline</li>
+					<li>Gulp Tasks: JS Transpilation</li>
+					<li>Gulp Tasks: Code Linting</li>
+					<li>Gulp Task: Packaging & Deployment</li>
+					<li>...</li>
+				</ul>
+				Gulp und NodeJS images
+			</section>
+
+			<section>
+				<h3>Prelude: Task Runner Cons</h3>
+				<ul>
+					<li>Definition over convention: Standard tasks manually coded</li>
+					<li>Configurability: Many projects with own structure, but similar tasks</li>
+					<li>Scalability: Complex projects have complex tasks</li>
+					<li>Maintainability: Complex projects have costly task maintenance</li>
+					<li>Feasibility: Advanced features difficult to implement (multi-tenancy, multiple packages, complex toolchains)</li>
+			</section>
+
+			<section>
+				<h3>What is Webpack?</h3>
+				<img width="auto" height="80%" src="https://webpack.js.org/bf093af83ee5548ff10fef24927b7cd2.svg">
+			</section>
+
+			<section>
+				<h3>What is Webpack?</h3>
+				<blockquote>
+					&ldquo;Webpack is a <i>module bundler</i>. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable
+					of transforming, bundling, or packaging just about any resource or asset.&rdquo;
+				</blockquote>
+			</section>
+
+			<section>
+				<h3>Webpack key components</h3>
+				<ul>
+					<li>CLI $ webpack entry.js -o bundle.js</li>
+					<li>Asset Loader</li>
+					<li>AST and Dependency Parser</li>
+					<li>Static Analysis Module</li>
+					<li>Compiler / Optimizer</li>
+					<li>Bundler</li>
+				</ul>
+				PDF link
+			</section>
+
+			<section>
+				<h3>What is Webpack?</h3>
+				<blockquote>
+					&ldquo;A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load
+					parts for the application on demand. Through "loaders," modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON,
+					Coffeescript, LESS, ... and your custom stuff.&rdquo;
+				</blockquote>
+			</section>
+
+			<section>
+				<h3>Why Bundlers, why Webpack ?</h3>
+				<ul>
+					<li><strong>Separation: dev, build, optimize, bundle</strong></li>
+					<li>Efficiency: Core support for common tasks</li>
+					<li>Re-Usability: Standard configuration</li>
+					<li>Extensibility: Plugin and Loader architecture</li>
+					<li>Ease of use: Built-in dev server w/ hot reload</li>
+					<li>Integration: Runtime support</li>
+					<li>Advanced feature: Code splitting</li>
+					<li>Advanced feature: Tree shaking</li>
+					<li>...</li>
+				</ul>
+			</section>
+
+<section>
+	<h3>How? Show me!</h3>
+	<pre>app.js</pre>
+	<pre><code class="hljs ts" data-trim>
+import bar from './bar';
+bar();
+</code></pre>
+	<pre>bar.js</pre>
+	<pre><code class="hljs ts" data-trim>
+export default function bar() {
+	...
+}
+</code></pre>
+</section>
+
+<section>
+	<h3>How? Show me!</h3>
+	<pre>webpack.config.js</pre>
+	<pre><code class="hljs ts" data-trim>
+module.exports = {
+	entry: './app.js',
+	output: {
+		filename: 'bundle.js'
+	}
+}
+</code></pre>
+	<pre>index.html</pre>
+	<pre><code class="hljs ts" data-trim>
+...
+	<script src="bundle.js"></script>
+...
+</code></pre>
+</section>
+
+<section>
+	<h3>Basic setup</h3>
+	<pre>webpack.config.js</pre>
+	<ul>
+		<li>single configuration file</li>
+		<li>JS module</li>
+		<li>expects a JavaScript object</li>
+	</ul>
+</section>
+
+			<section>
+				<h3>Basic setup</h3>
+				<pre>webpack.config.js</pre>
+	<pre><code class="hljs ts" data-trim>
+module.exports = {
+	entry: [ ... ],
+	module: {
+		rules: [ ... ]
+	},
+	resolve: {
+		 extensions: [ ... ],
+		 modules: [ ... ],
+		 alias: [ ... ]
+	}
+	plugins: [ ... ]
+	output: {
+		filename: 'bundle.js'
+	}
+	devServer: { ... }
+}
+</code></pre>
+</section>
+
+			<section>
+				<p>Entry point(s)</p>
+				<ul>
+					<li>Define entry points for bundle</li>
+					<li>Expects source code main files</li>
+					<li>All files are parsed, all dependencies resolved</li>
+				</ul>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs ts" data-trim>
+entry: [
+	'webpack/hot/dev-server',
+	'core-js/fn/promise',
+	'bootstrap-loader/extractStyles',
+	'app.js'
+]
+</code></pre>
+			</section>
+
+			<section>
+				<p>Bundle output</p>
+				<ul>
+					<li><i>path</i>: bundle output folder</li>
+					<li><i>publicPath</i>: use for URL prefixing</li>
+					<li><i>filename</i>: bundle file name</li>
+				</ul>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs ts" data-trim>
+outout: [
+	path: './build',
+	filename: 'index.js',
+	publicPath: 'http://localhost:8000/depot'
+]
+</code></pre>
+			</section>
+
+
+			<section>
+				<p>Rules</p>
+				<ul>
+					<li>Defines handling of source files</li>
+					<li><i>test</i>: operates on filename patterns</li>
+					<li><i>exclude</i>: Exclude path patterns</li>
+					<li><i>use</i>: On a match, uses the defined <strong>loaders</strong></li>
+
+				</ul>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs ts" data-trim>
+module: [
+	rules: [{
+		test: /.json$/,
+		exclude: /node_modules/,
+		use: [ 'json-loader' ]
+	}],
+]
+</code></pre>
+			</section>
+
+			<section>
+				<p>Loaders</p>
+				<ul>
+					<li>Each rule uses at least one loader</li>
+					<li>Loaders can be chained, input is piped</li>
+					<li>Each loader may get an options object</li>
+				</ul>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs ts" data-trim>
+rules: [{
+	test: /.scss$/,
+	use: [{
+		loader: 'css-loader',
+		options: { sourceMap: true }
+	}, {
+		loader: 'sass-loader',
+		options: { sourceMap: true }
+	}]
+}],
+</code></pre>
+			</section>
+
+			<section>
+				<p>Plugins</p>
+				<ul>
+					<li>Each plugin is a class</li>
+					<li>Webpack provides a multitude of <i>hooks</i></li>
+					<li>Example: Compilation hook provides stats</i>
+				</ul>
+				<pre>myplugin.js</pre>
+				<pre><code class="hljs ts" data-trim>
+class MyPlugin {
+	apply(compiler) {
+		compiler.plugin(“done”, (stats) => {
+			console.log(stats.toString());
+		}
+	}
+}
+</code></pre>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs ts" data-trim>
+plugins: [
+	MyPlugin()
+]
+</code></pre>
+			</section>
+
+			<section>
+				<p>Plugins</p>
+				<ul>
+					<li>Each plugin is a class</li>
+					<li>Webpack provides a multitude of <i>hooks</i></li>
+					<li>Example: <i>optimize-modules</i> provides modules</i>
+				</ul>
+				<pre>my-optimizer.plugin.js</pre>
+				<pre><code class="hljs ts" data-trim>
+class MyPlugin {
+apply(compiler) {
+	compiler.plugin(“compilation”, c => {
+		c.plugin(“optimize-modules”,
+			modules => {
+				modules.forEach(;
+		}
+	}
+}
+}</code></pre>
+			</section>
+
+			<section>
+				<h3>Resolver Architecture</h3>
+				<blockquote>
+					&ldquo;Resolvers provide a way to configure lookup paths for JavaScript ES6 / TypeScript Modules, Assets and Styles.&rdquo;
+				</blockquote>
+			</section>
+
+			<section>
+				<h3>Resolver Architecture</h3>
+				<p>Resolvers only work on configurable <i>extensions</i></p>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs js" data-trim>
+resolve: [
+	extensions: [
+		'.webpack.js',
+		'.js',
+		'.json',
+		'.ts',
+		'.scss',
+		'.css'
+	]
+]
+</code></pre>
+			</section>
+
+			<section>
+				<h3>Resolver Architecture</h3>
+				<p><i>Resolve</i>rs are tried from top to bottom</p>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs js" data-trim>
+resolve: [
+	modules: [
+		// typescript modules
+		path.resolve('src/app'),
+		// images
+		path.resolve('src/img'),
+		// webfonts
+		path.resolve('src/fonts'),
+		// styles
+		path.resolve('src/styles')
+		// node_modules
+		path.resolve('node_modules')
+	]
+]
+</code></pre>
+			</section>
+
+			<section>
+				<h3>Resolver Architecture</h3>
+				<p><i>Resolve</i>rs can be used for fallback sources</p>
+				<pre>webpack.config.js</pre>
+				<pre><code class="hljs js" data-trim>
+resolve: [
+	modules: [
+		// shared typescript modules
+		path.resolve('src/shared/app'),
+		// local typescript  modules
+		path.resolve('src/app')
+	]
+]
+</code></pre>
+			</section>
+
+			<section>
+				<h3>Resolver Usage</h3>
+				<p>Resolvers are applied to <i>import</i> statements and <i>require</i> methods</p>
+				<pre>customer.service.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+import 'angular';
+import { Address } from 'models/address';
+import { Email } from 'models/email';
+
+require.ensure([], function (require: any): void {
+	const app = require('./app');
+	app.default.factory('keycloak', () => {
+		return keycloak;
+	});
+	const angular = require('angular');
+	angular.bootstrap(document, ['app'], {
+		strictDi: true
+	});
+});
+</code></pre>
+			</section>
+
+			<section>
+				<h3>Resolver Usage</h3>
+				<p>Webpack allows Style and Asset imports in Source Code</p>
+				<pre>webpack.conf.js</pre>
+				<pre><code class="hljs js" data-trim>
+resolve: [
+	modules: [
+		'src/assets'
+	]
+]
+</code></pre>
+
+				<pre>app.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+import 'styles/index.scss';
+</code></pre>
+			</section>
+
+
+			<section>
+				<h3>Resolver Aliases</h3>
+				<p>Webpack allows aliasing a resource for easier import</p>
+				<pre>webpack.conf.js</pre>
+				<pre><code class="hljs js" data-trim>
+resolve: [
+	alias: [
+		nvd3css: 'node_modules/nvd3/nv.d3.css'
+	]
+]
+</code></pre>
+
+				<pre>app.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+import 'nvd3css';
+</code></pre>
+			</section>
+
+
+
+			<section>
+				<section>
+					<h3>Resolvers and TypeScript</h3>
+					<ul
+						><li>TypeScript &gt;&gt; JS using <i>tsconfig.json</i></li>
+						<li><i>import</i> statements &gt;&gt; resolved by  <i>moduleResolution</i> strategy</li>
+						<li>Base lookup paths are resolved using <i>paths</i></li>
+					</ul>
+				</section>
+
+				<section>
+				<pre>tsconfig.json</pre>
+				<pre><code class="hljs js" data-trim>
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es6",
+        "moduleResolution": "node",
+	"paths": {
+		"*": [
+			"src/shared/app/*",
+			"src/shared/*",
+			"src/*",
+			"src/app/*"
+		]
+	}}
+}
+</code></pre>
+			</section>
+
+			<section>
+				<h3>TypeScript Module resolution <i>node</i></h3>
+				<ul>
+					<li>All <i>relative</i> imports are resolved relative to the file</li>
+					<li>All other imports are resolved by <i>paths</i> and the import statement itself</li>
+					<li>If no path matches, walk up the folders until project root</i>
+				</ul>
+			</section>
+
+			<section>
+				<h3>TypeScript file lookups</h3>
+				<pre>moduleA.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+import 'angular';
+</code></pre>
+			</section>
+
+			<section>
+				<pre>$ ./node_modules/typescript/bin/tsc --traceResolution</pre>
+				<pre><code class="hljs bash" data-trim>
+======== Resolving module 'angular' from 'simulation-frontend/src/app/moduleA.ts'. ========
+Explicitly specified module resolution kind: 'NodeJs'.
+'baseUrl' option is set to 'simulation-frontend/', using this value to resolve non-relative module name 'angular'.
+'paths' option is specified, looking for a pattern to match module name 'angular'.
+Module name 'angular', matched pattern '*'.
+Trying substitution 'src/shared/app/*', candidate module location: 'src/shared/app/angular'.
+Loading module as file / folder, candidate module location 'simulation-frontend/src/shared/app/angular', target file type 'TypeScript'.
+File 'simulation-frontend/src/shared/app/angular.ts' does not exist.
+File 'simulation-frontend/src/shared/app/angular.tsx' does not exist.
+File 'simulation-frontend/src/shared/app/angular.d.ts' does not exist.
+Directory 'simulation-frontend/src/shared/app/angular' does not exist, skipping all lookups in it.
+Loading module 'angular' from 'node_modules' folder, target file type 'TypeScript'.
+Directory 'simulation-frontend/src/app/components/history-chart/node_modules' does not exist, skipping all lookups in it.
+Resolution for module 'angular' was found in cache.
+Resolving real path for 'simulation-frontend/node_modules/@types/angular/index.d.ts', result 'simulation-frontend/node_modules/@types/angular/index.d.ts'.
+======== Module name 'angular' was successfully resolved to 'simulation-frontend/node_modules/@types/angular/index.d.ts'. ========
+</code></pre>
+			</section>
+
+			<section>
+				<h3>TypeScript and Webpack interaction</h3>
+				<ul>
+					<li>Plugin <i>ts-loader</i> processes files for Webpack</li>
+					<li>The loader basically calls <i>tsc</i> </li>
+					<li>All compiled files are passed on to Webpack as JS</li>
+					<li>File bundling is handled by Webpack ES6 import analysis</li>
+				</ul>
+			</section>
+		</section>
+
+		<section>
+			<h3>Webpack and Angular</h3>
+			<p>Assuming Angular loads images dynamically but uses Webpack's module resolution - this does not work</p>
+				<pre>component.html</pre>
+				<pre><code class="hljs html" data-trim>
+<img ng-src="{{ '~img/strategy' + index + '.svg' }}" />
+</code></pre>
+
+			<p>Webpack's module resolution is provided at <b>runtime</b></p>
+		</section>
+
+		<section>
+			<h3>Webpack and Angular</h3>
+			<p>Use Webpack's runtime resolver to make it work</p>
+				<pre>component.html</pre>
+				<pre><code class="hljs html" data-trim>
+<img ng-src="{{ $ctrl.getImage(index) }}" />
+</code></pre>
+				<pre>component.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+getImage(index) {
+	return require('img/strategy' + index + '.svg');
+}
+</code></pre>
+		</section>
+
+		<section>
+			<h3>Webpack and Code-Splitting</h3>
+			<p>Webpack's runtime <i>require.ensure()</i>> splits chunks, which are lazy-loaded in the right order</p>
+				<pre>app.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+require.ensure([], function (require: any): void {
+	const app = require('./app');
+	app.default.factory('keycloak', () => {
+		return keycloak;
+	});
+	const angular = require('angular');
+	angular.bootstrap(document, ['app'], {
+		strictDi: true
+	});
+});
+</code></pre>
+			</section>
+
+
+		<section>
+			<h3>Webpack and Task Runner</h3>
+			<p>Webpack can be directly invoked using it's API</p>
+				<pre>app.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+const webpack = require('webpack');
+const webpackBundler = webpack(conf);
+const webpackChangeHandler = (err, stats) => {
+	if (err) {
+		gulpConf.errorHandler('Webpack')(err);
+	}
+	if (done) {
+		done();
+	}
+};
+// run webpack and quit
+webpackBundler.run(webpackChangeHandler);
+// watch mode for dev
+webpackBundler.watch(200, webpackChangeHandler);
+</code></pre>
+		</section>
+
+		<section>
+			<h3>Webpack and Task Runner</h3>
+			<p>Why use the programmatic API with a task runner</p>
+			<ul>
+				<li>Task Runners provide custom CLI args</li>
+				<li>Use for env switch: <pre>--env dev</pre></li>
+				<li>Use for config switches: <pre>--profile vv</pre></li>
+				<li>Configuration can be dynamically patched</li>
+				<li>Configuration is executed if it is a script</li>
+			</ul>
+		</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+                multiplex: {
+                    // Example values. To generate your own, see the socket.io server instructions.
+                    "secret": "14748297228917382396",
+                    "socketId": "9815069a968d3574",
+                    "url": 'http://192.168.178.22:1948' // Location of socket.io server
+                },
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+                    { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
+                    { src: 'plugin/multiplex/master.js', async: true },
+                    { src: 'plugin/multiplex/client.js', async: true },
+                    // and if you want speaker notes
+                    // { src: 'plugin/notes-server/client.js', async: true },
+					// { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

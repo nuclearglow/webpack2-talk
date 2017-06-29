@@ -1,0 +1,14 @@
+
+Setup Presentation Server
+
+$ npm install
+
+$ node plugin/notes-server
+
+1. Open the slides at http://localhost:1947
+2. Click on the link in your JS console to go to the notes page
+3. Advance through your slides and your notes will advance automatically
+
+$ node plugin/multiplex
+
+Multiplex running on port 1948
