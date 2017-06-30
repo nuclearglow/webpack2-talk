@@ -791,6 +791,21 @@ requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translati
 			Reveal.initialize({
 				history: true,
 
+				// Parallax background image
+				parallaxBackgroundImage: 'images/starfield-1.jpg', // e.g. "https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg"
+
+				// Parallax background size
+				parallaxBackgroundSize: '1280px 900px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+
+				// Number of pixels to move the parallax background per slide
+				// - Calculated automatically unless specified
+				// - Set to 0 to disable movement along an axis
+				parallaxBackgroundHorizontal: 200,
+				parallaxBackgroundVertical: 200,
+
+				transition: 'slide',
+				transitionSpeed: 'slow',
+
                 multiplex: {
                     // Example values. To generate your own, see the socket.io server instructions.
                     "secret": "14748297228917382396",
