@@ -82,13 +82,13 @@
 				<ul>
 					<li>flat files (HTML, CSS, JS)</li>
 					<li>Push to server (local or remote)</li>
-					<li>Refresh in browser</li>
+					<li>Refresh in browser <b>F5</b></li>
 					<li>Development === Server deployment</li>
 				</ul>
 				<div>
-					<img width="auto" height="80%" src="images/php-logo.jpg">
-					<img width="auto" height="80%" src="images/lamp-logo.jpeg">
-					<img height="auto" width="250px" src="images/f5-key.jpg">
+					<img width="auto" height="200px" src="images/php-logo.png">
+					<img width="auto" height="150px" src="images/lamp-logo.png">
+					<img height="auto" width="200px" src="images/f5-key.jpg">
 				</div>
 
 			</section>
@@ -97,7 +97,7 @@
 				<h3>Prelude: Frontend Modern Times</h3>
 				<p>Grunt Task Runner</p>
 				<ul>
-					<li>Declarative approach using congiration objects</li>
+					<li>Declarative approach using configuration objects</li>
 					<li>Core features extended by plugins</li>
 				</ul>
 				<ul class="shell-body">
@@ -640,7 +640,7 @@ getImage(index) {
 
 		<section>
 			<h3>Webpack and Code-Splitting</h3>
-			<p>Webpack's runtime <i>require.ensure()</i>> splits chunks, which are lazy-loaded in the right order</p>
+			<p>Webpack's runtime <i>require.ensure()</i> splits chunks, which are lazy-loaded in the right order</p>
 				<pre>app.ts</pre>
 				<pre><code class="hljs ts" data-trim>
 require.ensure([], function (require: any): void {
@@ -756,6 +756,30 @@ requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translati
 		</section>
 		</section>
 
+		<section>
+			<h3>Recap</h3>
+			<ul class="pros">
+				<li>Use <i>webpack</i> for project setup, bundling, transpilation, asset management, SCSS compilation, ...</li>
+				<li>Use <i>resolvers</i> for shared projects and multi-tenancy</li>
+				<li>Use the <i>Webpack dev server</i>, it is very powerful!</li>
+				<li>Use <i>gulp</i> to provide special webpack configurations (i.e. for dev, tests and dist) and for running tests</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Thanks !!!</h3>
+			<p>Sources</p>
+			<ul>
+				<li><a href="https://nuclearglow.github.io/webpack2-talk/index.html">https://nuclearglow.github.io/webpack2-talk/index.html</a></li>
+				<li>Webpack GutHib: <a href="https://github.com/webpack/webpack">https://github.com/webpack/webpack</a></li>
+				<li>GitHub Homepage: <a href="https://webpack.js.org">https://webpack.js.org</a></li>
+				<li>Grunt Website: <a href="https://gruntjs.com/">https://gruntjs.com/</a></li>
+				<li>Gulp Website: <a href="http://gulpjs.com/">http://gulpjs.com/</a></li>
+				<li><a href="https://da-14.com/blog/gulp-vs-grunt-vs-webpack-comparison-build-tools-task-runners">https://da-14.com/blog/gulp-vs-grunt-vs-webpack-comparison-build-tools-task-runners</a></li>
+				<li><a href="http://www.clipartpanda.com/">http://www.clipartpanda.com/</a></li>
+				<li><a href="http://lab.hakim.se/reveal-js/">http://lab.hakim.se/reveal-js/</a></li>
+			</ul>
+		</section>
 			</div>
 		</div>
 
