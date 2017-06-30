@@ -450,7 +450,7 @@ resolve: [
 		// webfonts
 		path.resolve('src/fonts'),
 		// styles
-		path.resolve('src/styles')
+		path.resolve('src/styles'),
 		// node_modules
 		path.resolve('node_modules')
 	]
@@ -583,12 +583,12 @@ import 'angular';
 			</section>
 
 			<section>
-				<pre>$ ./node_modules/typescript/bin/tsc --traceResolution</pre>
-				<pre><code class="hljs bash" data-trim>
+				<ul class="shell-body">
+					<li>./node_modules/typescript/bin/tsc --traceResolution</li>
+				</ul>
+				<pre><code class="hljs shell" data-trim>
 ======== Resolving module 'angular' from 'simulation-frontend/src/app/moduleA.ts'. ========
 Explicitly specified module resolution kind: 'NodeJs'.
-'baseUrl' option is set to 'simulation-frontend/', using this value to resolve non-relative module name 'angular'.
-'paths' option is specified, looking for a pattern to match module name 'angular'.
 Module name 'angular', matched pattern '*'.
 Trying substitution 'src/shared/app/*', candidate module location: 'src/shared/app/angular'.
 Loading module as file / folder, candidate module location 'simulation-frontend/src/shared/app/angular', target file type 'TypeScript'.
@@ -598,7 +598,6 @@ File 'simulation-frontend/src/shared/app/angular.d.ts' does not exist.
 Directory 'simulation-frontend/src/shared/app/angular' does not exist, skipping all lookups in it.
 Loading module 'angular' from 'node_modules' folder, target file type 'TypeScript'.
 Directory 'simulation-frontend/src/app/components/history-chart/node_modules' does not exist, skipping all lookups in it.
-Resolution for module 'angular' was found in cache.
 Resolving real path for 'simulation-frontend/node_modules/@types/angular/index.d.ts', result 'simulation-frontend/node_modules/@types/angular/index.d.ts'.
 ======== Module name 'angular' was successfully resolved to 'simulation-frontend/node_modules/@types/angular/index.d.ts'. ========
 </code></pre>
@@ -620,18 +619,16 @@ Resolving real path for 'simulation-frontend/node_modules/@types/angular/index.d
 			<p>Assuming Angular loads images dynamically but uses Webpack's module resolution - this does not work</p>
 				<pre>component.html</pre>
 				<pre><code class="hljs html" data-trim>
-<img ng-src="{{ '~img/strategy' + index + '.svg' }}" />
+&lt;img ng-src="{{ '~img/strategy' + index + '.svg' }}" /&gt;
 </code></pre>
-
-			<p>Webpack's module resolution is provided at <b>runtime</b></p>
 		</section>
 
 		<section>
 			<h3>Webpack and Angular</h3>
-			<p>Use Webpack's runtime resolver to make it work</p>
+			<p>Use Webpack's <i>runtime</i> resolver to make it work</p>
 				<pre>component.html</pre>
 				<pre><code class="hljs html" data-trim>
-<img ng-src="{{ $ctrl.getImage(index) }}" />
+&lt;img ng-src="{{ $ctrl.getImage(index) }}" /&gt;
 </code></pre>
 				<pre>component.ts</pre>
 				<pre><code class="hljs ts" data-trim>
@@ -687,11 +684,76 @@ webpackBundler.watch(200, webpackChangeHandler);
 			<p>Why use the programmatic API with a task runner</p>
 			<ul>
 				<li>Task Runners provide custom CLI args</li>
-				<li>Use for env switch: <pre>--env dev</pre></li>
-				<li>Use for config switches: <pre>--profile vv</pre></li>
+				<li>Use for environment switches</li>
+				<li>Use for config switches</li>
 				<li>Configuration can be dynamically patched</li>
 				<li>Configuration is executed if it is a script</li>
 			</ul>
+		</section>
+
+		<section>
+			<h3>Multi-tenancy: VisualVest and MeinInvest</h3>
+			<ul class="shell-body">
+				<li>gulp serve --env dev --profile geno --instance sparda-n</li>
+			</ul>
+			<ul class="pros">
+				<li>Uses <i>gulp</i> for custom CLI args to patch Webpack config: environment, profile, bank instance</li>
+				<li>Uses own <i>resolver</i> for profiles: VisualVest and MeinInvest may have unique components with same name</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Multi-tenancy: VisualVest and MeinInvest</h3>
+			<ul class="shell-body">
+				<li>gulp serve --env dev --profile geno --instance psd-nord</li>
+			</ul>
+			<ul class="pros">
+				<li><i>Webpack</i> bundles different configuration files for each profile: VisualVest and MeinInvest</i>
+				<li><i>Gulp</i> provides <i>Webpack</i> with these configuration files and a custom SCSS pipeline for each bank instance</i></li>
+			</ul>
+		</section>
+
+
+		<section>
+			<section>
+				<h3>Multi-tenancy: VisualVest and MeinInvest</h3>
+				<ul>
+					<li><i>Webpack</i> dynamically loads base translation JSON files for VisualVest</li>
+				</ul>
+				<pre>config/language.ts</pre>
+				<pre><code class="hljs ts" data-trim>
+	var translations = {};
+	requireAll(require.context('app', true, /\.de\.json$/)).map(translation => {
+		angular.extend(translations, translation);
+	});
+	</code></pre>
+		</section>
+
+		<section>
+			<ul class="pros">
+				<li>For MeinInvest, the <i>Webpack</i> resolver loads a different configuration file</li>
+				<li>All VisualVest translations are then selectively overwritten</li>
+			</ul>
+			<pre>geno/config/language.ts</pre>
+			<pre><code class="hljs ts" data-trim>
+var translations = {};
+requireAll(require.context('app', true, /\.de\.json$/)).map(translation => {
+  angular.extend(translations, translation);
+});
+requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translation => {
+  angular.extend(translations, translation);
+});
+</code></pre>
+		</section>
+
+		<section>
+			<ul class="pros">
+				<li>Translation for VisualVest and MeinInvest are conveniently stored in component folder</li>
+			</ul>
+			<div>
+				<img src="images/component-folder.png" height="80%" />
+			</div>
+		</section>
 		</section>
 
 			</div>
@@ -721,7 +783,7 @@ webpackBundler.watch(200, webpackChangeHandler);
                     // and if you want speaker notes
                     // { src: 'plugin/notes-server/client.js', async: true },
 					// { src: 'plugin/notes/notes.js', async: true },
-                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                    { src: 'plugin/highlight/highlight.pack.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
 		</script>
