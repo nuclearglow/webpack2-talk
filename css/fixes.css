@@ -1,3 +1,40 @@
+.relative {
+	position: relative;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.centered {
+	top: 20%;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+.reveal section ul.cons li {
+    list-style-image:url(../images/thumbsdown.png) !important
+}
+
+.reveal section ul.pros li {
+    list-style-image:url(../images/thumbsup.png) !important
+}
+
+.reveal section ul.cons li::before,
+.reveal section ul.pros li::before {
+	content: '';
+}
+
+.flipped {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
 
 .reveal section img {
 	border: 0;
@@ -9,7 +46,7 @@
 }
 
 .reveal .slides > section {
-	width: 80%;
+	width: 960px;
 }
 
 .reveal section h3 {
@@ -74,4 +111,8 @@
 
 .print-pdf .reveal .slides section {
     margin-top: 200px !important;
+}
+
+.hljs {
+	background-color: #000 !important;
 }

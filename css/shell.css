@@ -1,0 +1,33 @@
+.reveal .shell-body {
+    text-align: left;
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    list-style: none;
+    background: #141414;
+    color: #45D40C;
+    font: 0.8em 'Andale Mono', Consolas, 'Courier New';
+    line-height: 1.6em;
+
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.reveal section .shell-body li:before {
+    content: '$';
+    position: absolute;
+    color: #45D40C;
+    padding-right: 50px;
+    left: 0;
+    top: 0;
+}
+
+.shell-body li {
+    word-wrap: break-word;
+    position: relative;
+    padding: 0 0 0 35px;
+}
