@@ -66,7 +66,7 @@
 			</section>
 
 			<section>
-				<h3>Prelude: What does frontend development require?</h3>
+				<p>What does frontend development require?</p>
 				<ul>
 					<li>Easy project setup</li>
 					<li>Convenient dev environment</li>
@@ -110,7 +110,6 @@
 			</section>
 
 			<section>
-				<h3>Prelude: Frontend Modern Times</h3>
 				<ul>
 					<li>NodeJS: dev server</li>
 					<li>Grunt Task: SCSS Pipeline</li>
@@ -123,7 +122,6 @@
 			</section>
 
 			<section>
-				<h3>Prelude: Frontend Modern Times</h3>
 				<p>Gukp Task Runner</p>
 				<ul>
 					<li>Functional approach: Each task is a function</li>
@@ -140,7 +138,6 @@
 			</section>
 
 			<section>
-				<h3>Prelude: Frontend Modern Times</h3>
 				<ul>
 					<li>NodeJS: dev server w/ hot reload</li>
 					<li>Gulp Task: SCSS Pipeline</li>
@@ -168,20 +165,19 @@
 
 			<section>
 				<h3>What is Webpack?</h3>
+				<blockquote>
+					&ldquo;Webpack is a <i>module bundler</i>. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable
+					of transforming, bundling, or packaging just about any resource or asset.&rdquo;
+				</blockquote>
+			</section>
+
+			<section>
 				<div class="relative">
 					<img width="auto" height="80%" src="images/webpack-background.svg" />
 					<div class="absolute centered">
 						<img class="flipped" width="auto" height="200px" src="images/meat-grinder.png" />
 					</div>
 				</div>
-			</section>
-
-			<section>
-				<h3>What is Webpack?</h3>
-				<blockquote>
-					&ldquo;Webpack is a <i>module bundler</i>. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable
-					of transforming, bundling, or packaging just about any resource or asset.&rdquo;
-				</blockquote>
 			</section>
 
 			<section>
@@ -199,7 +195,6 @@
 			</section>
 
 			<section>
-				<h3>What is Webpack?</h3>
 				<blockquote>
 					&ldquo;A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows to load
 					parts for the application on demand. Through "loaders," modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON,
@@ -208,7 +203,7 @@
 			</section>
 
 			<section>
-				<h3>Why Bundlers, why Webpack ?</h3>
+				<h3>Why Webpack ?</h3>
 				<ul class="pros">
 					<li><strong>Separation: dev, build, optimize, bundle</strong></li>
 					<li>Efficiency: Core support for common tasks</li>
@@ -222,6 +217,7 @@
 			</section>
 
 <section>
+	<section>
 	<h3>How? Show me!</h3>
 	<pre>app.js</pre>
 	<pre><code class="hljs ts" data-trim>
@@ -234,10 +230,9 @@ export default function bar() {
 	...
 }
 </code></pre>
-</section>
+	</section>
 
-<section>
-	<h3>How? Show me!</h3>
+	<section>
 	<pre>webpack.config.js</pre>
 	<pre><code class="hljs ts" data-trim>
 module.exports = {
@@ -249,13 +244,13 @@ module.exports = {
 </code></pre>
 	<pre>index.html</pre>
 	<pre><code class="hljs html" data-trim>
-	<script src="bundle.js"></script>
+&lt;script src="bundle.js"&gt;&lt;/script&gt;
 </code></pre>
+	</section>
 </section>
 
 <section>
 	<h3>Basic setup</h3>
-	<pre>webpack.config.js</pre>
 	<ul>
 		<li>single configuration file</li>
 		<li>JS module</li>
@@ -264,7 +259,6 @@ module.exports = {
 </section>
 
 			<section>
-				<h3>Basic setup</h3>
 				<pre>webpack.config.js</pre>
 	<pre><code class="hljs ts" data-trim>
 module.exports = {
@@ -419,7 +413,6 @@ apply(compiler) {
 			</section>
 
 			<section>
-				<h3>Resolver Architecture</h3>
 				<p>Resolvers only work on configurable <i>extensions</i></p>
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
@@ -437,7 +430,6 @@ resolve: [
 			</section>
 
 			<section>
-				<h3>Resolver Architecture</h3>
 				<p><i>Resolve</i>rs are tried from top to bottom</p>
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
@@ -459,7 +451,6 @@ resolve: [
 			</section>
 
 			<section>
-				<h3>Resolver Architecture</h3>
 				<p><i>Resolve</i>rs can be used for fallback sources</p>
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
@@ -497,7 +488,6 @@ require.ensure([], function (require: any): void {
 			</section>
 
 			<section>
-				<h3>Resolver Usage</h3>
 				<p>Webpack allows Style and Asset imports in Source Code</p>
 				<pre>webpack.conf.js</pre>
 				<pre><code class="hljs js" data-trim>
@@ -566,7 +556,7 @@ import 'nvd3css';
 			</section>
 
 			<section>
-				<h3>TypeScript Module resolution <i>node</i></h3>
+				<p>TypeScript Module resolution <i>node</i></p>
 				<ul>
 					<li>All <i>relative</i> imports are resolved relative to the file</li>
 					<li>All other imports are resolved by <i>paths</i> and the import statement itself</li>
@@ -604,7 +594,7 @@ Resolving real path for 'simulation-frontend/node_modules/@types/angular/index.d
 			</section>
 
 			<section>
-				<h3>TypeScript and Webpack interaction</h3>
+				<p>TypeScript and Webpack interaction</p>
 				<ul>
 					<li>Plugin <i>ts-loader</i> processes files for Webpack</li>
 					<li>The loader basically calls <i>tsc</i> </li>
@@ -624,7 +614,6 @@ Resolving real path for 'simulation-frontend/node_modules/@types/angular/index.d
 		</section>
 
 		<section>
-			<h3>Webpack and Angular</h3>
 			<p>Use Webpack's <i>runtime</i> resolver to make it work</p>
 				<pre>component.html</pre>
 				<pre><code class="hljs html" data-trim>
@@ -680,7 +669,6 @@ webpackBundler.watch(200, webpackChangeHandler);
 		</section>
 
 		<section>
-			<h3>Webpack and Task Runner</h3>
 			<p>Why use the programmatic API with a task runner</p>
 			<ul>
 				<li>Task Runners provide custom CLI args</li>
@@ -703,7 +691,6 @@ webpackBundler.watch(200, webpackChangeHandler);
 		</section>
 
 		<section>
-			<h3>Multi-tenancy: VisualVest and MeinInvest</h3>
 			<ul class="shell-body">
 				<li>gulp serve --env dev --profile geno --instance psd-nord</li>
 			</ul>
@@ -716,7 +703,6 @@ webpackBundler.watch(200, webpackChangeHandler);
 
 		<section>
 			<section>
-				<h3>Multi-tenancy: VisualVest and MeinInvest</h3>
 				<ul>
 					<li><i>Webpack</i> dynamically loads base translation JSON files for VisualVest</li>
 				</ul>
@@ -771,10 +757,10 @@ requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translati
 			<p>Sources</p>
 			<ul>
 				<li><a href="https://nuclearglow.github.io/webpack2-talk/index.html">https://nuclearglow.github.io/webpack2-talk/index.html</a></li>
-				<li>Webpack GutHib: <a href="https://github.com/webpack/webpack">https://github.com/webpack/webpack</a></li>
-				<li>GitHub Homepage: <a href="https://webpack.js.org">https://webpack.js.org</a></li>
-				<li>Grunt Website: <a href="https://gruntjs.com/">https://gruntjs.com/</a></li>
-				<li>Gulp Website: <a href="http://gulpjs.com/">http://gulpjs.com/</a></li>
+				<li><a href="https://github.com/webpack/webpack">https://github.com/webpack/webpack</a></li>
+				<li><a href="https://webpack.js.org">https://webpack.js.org</a></li>
+				<li><a href="https://gruntjs.com/">https://gruntjs.com/</a></li>
+				<li><a href="http://gulpjs.com/">http://gulpjs.com/</a></li>
 				<li><a href="https://da-14.com/blog/gulp-vs-grunt-vs-webpack-comparison-build-tools-task-runners">https://da-14.com/blog/gulp-vs-grunt-vs-webpack-comparison-build-tools-task-runners</a></li>
 				<li><a href="http://www.clipartpanda.com/">http://www.clipartpanda.com/</a></li>
 				<li><a href="http://lab.hakim.se/reveal-js/">http://lab.hakim.se/reveal-js/</a></li>
@@ -804,7 +790,7 @@ requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translati
 				parallaxBackgroundVertical: 200,
 
 				transition: 'slide',
-				transitionSpeed: 'slow',
+				//transitionSpeed: 'slow',
 
                 multiplex: {
                     // Example values. To generate your own, see the socket.io server instructions.

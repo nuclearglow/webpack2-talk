@@ -46,15 +46,15 @@
 }
 
 .reveal .slides > section {
-	width: 960px;
+	width: 900px;
 }
 
 .reveal section h3 {
 	background-color: #ddd;
 	color: #000;
-	width: 100%;
-	padding: 20px;
-	margin-bottom: 30px;
+	width: 90%;
+	padding: 10px;
+	margin-bottom: 20px;
 	text-transform: none;
 	position: relative;
 }
@@ -62,13 +62,13 @@
 .reveal section h3::after {
 	content: "";
 	position: absolute;
-	top: -70px;
-	right: -150px;
+	top: -40px;
+	right: -120px;
 	background-image: url('../images/logo.png');
 	background-repeat: no-repeat;
 	background-size: contain;
-	width: 200px;
-	height: 95px;
+	width: 175px;
+	height: 70px;
 }
 
 .reveal section h4 {
