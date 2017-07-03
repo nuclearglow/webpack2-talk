@@ -154,12 +154,12 @@
 			<section>
 				<h3>Prelude: Task Runner Cons</h3>
 				<ul class="cons">
-					<li><i>Talkativeness</i>: Standard tasks hand-coded, unwieldy</li>
-					<li><i>Configurability</i>: Unique project structure, similar tasks</li>
-					<li><i>Scalability</i>: Complex projects have complicated tasks</li>
-					<li><i>Maintainability</i>: Complex project setup and maintenance</li>
-					<li><i>Flexibility</i>: Uncommon challenges hard to solve</li>
-					<li><i>Feasibility</i>: Advanced features hard to achieve <br />(i.e. multi-tenancy, multiple packages)</li>
+					<li class="fragment"><i>Talkativeness</i>: Standard tasks hand-coded, unwieldy</li>
+					<li class="fragment"><i>Configurability</i>: Unique project structure, similar tasks</li>
+					<li class="fragment"><i>Scalability</i>: Complex projects have complicated tasks</li>
+					<li class="fragment"><i>Maintainability</i>: Complex project setup and maintenance</li>
+					<li class="fragment"><i>Flexibility</i>: Uncommon challenges hard to solve</li>
+					<li class="fragment"><i>Feasibility</i>: Advanced features hard to achieve <br />(i.e. multi-tenancy, multiple packages)</li>
 				</ul>
 			</section>
 
@@ -183,13 +183,13 @@
 			<section>
 				<h3>Webpack key components</h3>
 				<ul>
-					<li>Asset Loader</li>
-					<li>AST and Dependency Parser</li>
-					<li>Static Analysis Module</li>
-					<li>Compiler / Optimizer</li>
-					<li>Bundler</li>
+					<li class="fragment">Asset Loader</li>
+					<li class="fragment">AST and Dependency Parser</li>
+					<li class="fragment">Static Analysis Module</li>
+					<li class="fragment">Compiler / Optimizer</li>
+					<li class="fragment">Bundler</li>
 				</ul>
-				<ul class="shell-body">
+				<ul class="fragment shell-body">
 					<li>webpack entry.js -o bundle.js</li>
 				</ul>
 			</section>
@@ -205,14 +205,14 @@
 			<section>
 				<h3>Why Webpack ?</h3>
 				<ul class="pros">
-					<li><strong>Separation: dev, build, optimize, bundle</strong></li>
-					<li>Efficiency: Core support for common tasks</li>
-					<li>Re-Usability: Standard configuration</li>
-					<li>Extensibility: Plugin and Loader architecture</li>
-					<li>Ease of use: Built-in dev server w/ hot reload</li>
-					<li>Integration: Runtime support</li>
-					<li>Advanced feature: Code splitting</li>
-					<li>Advanced feature: Tree shaking</li>
+					<li class="fragment"><strong>Separation: dev, build, optimize, bundle</strong></li>
+					<li class="fragment">Efficiency: Core support for common tasks</li>
+					<li class="fragment">Re-Usability: Standard configuration</li>
+					<li class="fragment">Extensibility: Plugin and Loader architecture</li>
+					<li class="fragment">Ease of use: Built-in dev server w/ hot reload</li>
+					<li class="fragment">Integration: Runtime support</li>
+					<li class="fragment">Advanced feature: Code splitting</li>
+					<li class="fragment">Advanced feature: Tree shaking</li>
 				</ul>
 			</section>
 
@@ -236,10 +236,10 @@ export default function bar() {
 	<pre>webpack.config.js</pre>
 	<pre><code class="hljs ts" data-trim>
 module.exports = {
-	entry: './app.js',
-	output: {
-		filename: 'bundle.js'
-	}
+  entry: './app.js',
+  output: {
+    filename: 'bundle.js'
+  }
 }
 </code></pre>
 	<pre>index.html</pre>
@@ -262,20 +262,20 @@ module.exports = {
 				<pre>webpack.config.js</pre>
 	<pre><code class="hljs ts" data-trim>
 module.exports = {
-	entry: [ ... ],
-	module: {
-		rules: [ ... ]
-	},
-	resolve: {
-		 extensions: [ ... ],
-		 modules: [ ... ],
-		 alias: [ ... ]
-	}
-	plugins: [ ... ]
-	output: {
-		filename: 'bundle.js'
-	}
-	devServer: { ... }
+  entry: [ ... ],
+  module: {
+    rules: [ ... ]
+  },
+  resolve: {
+	extensions: [ ... ],
+  	modules: [ ... ],
+  	alias: [ ... ]
+  }
+  plugins: [ ... ]
+  output: {
+    filename: 'bundle.js'
+  }
+  devServer: { ... }
 }
 </code></pre>
 </section>
@@ -290,10 +290,10 @@ module.exports = {
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs ts" data-trim>
 entry: [
-	'webpack/hot/dev-server',
-	'core-js/fn/promise',
-	'bootstrap-loader/extractStyles',
-	'app.js'
+  'webpack/hot/dev-server',
+  'core-js/fn/promise',
+  'bootstrap-loader/extractStyles',
+  'app.js'
 ]
 </code></pre>
 			</section>
@@ -308,9 +308,9 @@ entry: [
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs ts" data-trim>
 outout: [
-	path: './build',
-	filename: 'index.js',
-	publicPath: 'http://localhost:8000/depot'
+  path: './build',
+  filename: 'index.js',
+  publicPath: 'http://localhost:8000/depot'
 ]
 </code></pre>
 			</section>
@@ -328,11 +328,11 @@ outout: [
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs ts" data-trim>
 module: [
-	rules: [{
-		test: /.json$/,
-		exclude: /node_modules/,
-		use: [ 'json-loader' ]
-	}],
+  rules: [{
+  	test: /.json$/,
+  	exclude: /node_modules/,
+  	use: [ 'json-loader' ]
+  }],
 ]
 </code></pre>
 			</section>
@@ -347,14 +347,14 @@ module: [
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs ts" data-trim>
 rules: [{
-	test: /.scss$/,
-	use: [{
-		loader: 'css-loader',
-		options: { sourceMap: true }
-	}, {
-		loader: 'sass-loader',
-		options: { sourceMap: true }
-	}]
+  test: /.scss$/,
+  use: [{
+  	loader: 'css-loader',
+  	options: { sourceMap: true }
+  }, {
+  	loader: 'sass-loader',
+  	options: { sourceMap: true }
+  }]
 }],
 </code></pre>
 			</section>
@@ -369,17 +369,17 @@ rules: [{
 				<pre>myplugin.js</pre>
 				<pre><code class="hljs ts" data-trim>
 class MyPlugin {
-	apply(compiler) {
-		compiler.plugin(“done”, (stats) => {
-			console.log(stats.toString());
-		}
-	}
+  apply(compiler) {
+  	compiler.plugin(“done”, (stats) => {
+      console.log(stats.toString());
+  	}
+  }
 }
 </code></pre>
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs ts" data-trim>
 plugins: [
-	MyPlugin()
+  MyPlugin()
 ]
 </code></pre>
 			</section>
@@ -395,12 +395,12 @@ plugins: [
 				<pre><code class="hljs ts" data-trim>
 class MyPlugin {
 apply(compiler) {
-	compiler.plugin(“compilation”, c => {
-		c.plugin(“optimize-modules”,
-			modules => {
-				modules.forEach(;
-		}
-	}
+  compiler.plugin(“compilation”, c => {
+  	c.plugin(“optimize-modules”,
+      modules => {
+  	    modules.forEach(;
+  	}
+  }
 }
 }</code></pre>
 			</section>
@@ -417,14 +417,14 @@ apply(compiler) {
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
 resolve: [
-	extensions: [
-		'.webpack.js',
-		'.js',
-		'.json',
-		'.ts',
-		'.scss',
-		'.css'
-	]
+  extensions: [
+  	'.webpack.js',
+  	'.js',
+  	'.json',
+  	'.ts',
+  	'.scss',
+  	'.css'
+  ]
 ]
 </code></pre>
 			</section>
@@ -434,18 +434,18 @@ resolve: [
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
 resolve: [
-	modules: [
-		// typescript modules
-		path.resolve('src/app'),
-		// images
-		path.resolve('src/img'),
-		// webfonts
-		path.resolve('src/fonts'),
-		// styles
-		path.resolve('src/styles'),
-		// node_modules
-		path.resolve('node_modules')
-	]
+  modules: [
+  	// typescript modules
+  	path.resolve('src/app'),
+  	// images
+  	path.resolve('src/img'),
+  	// webfonts
+  	path.resolve('src/fonts'),
+  	// styles
+  	path.resolve('src/styles'),
+  	// node_modules
+  	path.resolve('node_modules')
+  ]
 ]
 </code></pre>
 			</section>
@@ -455,12 +455,12 @@ resolve: [
 				<pre>webpack.config.js</pre>
 				<pre><code class="hljs js" data-trim>
 resolve: [
-	modules: [
-		// shared typescript modules
-		path.resolve('src/shared/app'),
-		// local typescript  modules
-		path.resolve('src/app')
-	]
+  modules: [
+  	// shared typescript modules
+  	path.resolve('src/shared/app'),
+  	// local typescript  modules
+  	path.resolve('src/app')
+  ]
 ]
 </code></pre>
 			</section>
@@ -475,14 +475,14 @@ import { Address } from 'models/address';
 import { Email } from 'models/email';
 
 require.ensure([], function (require: any): void {
-	const app = require('./app');
-	app.default.factory('keycloak', () => {
-		return keycloak;
-	});
-	const angular = require('angular');
-	angular.bootstrap(document, ['app'], {
-		strictDi: true
-	});
+  const app = require('./app');
+  app.default.factory('keycloak', () => {
+  	return keycloak;
+  });
+  const angular = require('angular');
+  angular.bootstrap(document, ['app'], {
+  	strictDi: true
+  });
 });
 </code></pre>
 			</section>
@@ -492,9 +492,9 @@ require.ensure([], function (require: any): void {
 				<pre>webpack.conf.js</pre>
 				<pre><code class="hljs js" data-trim>
 resolve: [
-	modules: [
-		'src/assets'
-	]
+  modules: [
+  	'src/assets'
+  ]
 ]
 </code></pre>
 
@@ -511,9 +511,9 @@ import 'styles/index.scss';
 				<pre>webpack.conf.js</pre>
 				<pre><code class="hljs js" data-trim>
 resolve: [
-	alias: [
-		nvd3css: 'node_modules/nvd3/nv.d3.css'
-	]
+  alias: [
+  	nvd3css: 'node_modules/nvd3/nv.d3.css'
+  ]
 ]
 </code></pre>
 
@@ -529,8 +529,8 @@ import 'nvd3css';
 				<section>
 					<h3>Resolvers and TypeScript</h3>
 					<ul
-						><li>TypeScript &gt;&gt; JS using <i>tsconfig.json</i></li>
-						<li><i>import</i> statements &gt;&gt; resolved by  <i>moduleResolution</i> strategy</li>
+						><li>TypeScript is <i>transpiled</i> to JS using <i>tsconfig.json</i></li>
+						<li><i>import</i> statements are resolved by  <i>moduleResolution</i> strategy</li>
 						<li>Base lookup paths are resolved using <i>paths</i></li>
 					</ul>
 				</section>
@@ -539,18 +539,18 @@ import 'nvd3css';
 				<pre>tsconfig.json</pre>
 				<pre><code class="hljs js" data-trim>
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "es6",
-        "moduleResolution": "node",
-	"paths": {
-		"*": [
-			"src/shared/app/*",
-			"src/shared/*",
-			"src/*",
-			"src/app/*"
-		]
-	}}
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+  "paths": {
+  	"*": [
+  	  "src/shared/app/*",
+  	  "src/shared/*",
+  	  "src/*",
+  	  "src/app/*"
+  	]
+  }}
 }
 </code></pre>
 			</section>
@@ -576,7 +576,7 @@ import 'angular';
 				<ul class="shell-body">
 					<li>./node_modules/typescript/bin/tsc --traceResolution</li>
 				</ul>
-				<pre><code class="hljs shell" data-trim>
+				<pre class="stretch" ><code class="stretch hljs shell" data-trim>
 ======== Resolving module 'angular' from 'simulation-frontend/src/app/moduleA.ts'. ========
 Explicitly specified module resolution kind: 'NodeJs'.
 Module name 'angular', matched pattern '*'.
@@ -633,14 +633,14 @@ getImage(index) {
 				<pre>app.ts</pre>
 				<pre><code class="hljs ts" data-trim>
 require.ensure([], function (require: any): void {
-	const app = require('./app');
-	app.default.factory('keycloak', () => {
-		return keycloak;
-	});
-	const angular = require('angular');
-	angular.bootstrap(document, ['app'], {
-		strictDi: true
-	});
+  const app = require('./app');
+  app.default.factory('keycloak', () => {
+  	return keycloak;
+  });
+  const angular = require('angular');
+  angular.bootstrap(document, ['app'], {
+  	strictDi: true
+  });
 });
 </code></pre>
 			</section>
@@ -654,12 +654,12 @@ require.ensure([], function (require: any): void {
 const webpack = require('webpack');
 const webpackBundler = webpack(conf);
 const webpackChangeHandler = (err, stats) => {
-	if (err) {
-		gulpConf.errorHandler('Webpack')(err);
-	}
-	if (done) {
-		done();
-	}
+  if (err) {
+  	gulpConf.errorHandler('Webpack')(err);
+  }
+  if (done) {
+  	done();
+  }
 };
 // run webpack and quit
 webpackBundler.run(webpackChangeHandler);
@@ -671,11 +671,11 @@ webpackBundler.watch(200, webpackChangeHandler);
 		<section>
 			<p>Why use the programmatic API with a task runner</p>
 			<ul>
-				<li>Task Runners provide custom CLI args</li>
-				<li>Use for environment switches</li>
-				<li>Use for config switches</li>
-				<li>Configuration can be dynamically patched</li>
-				<li>Configuration is executed if it is a script</li>
+				<li class="fragment">Task Runners provide custom CLI args</li>
+				<li class="fragment">Use for environment switches</li>
+				<li class="fragment">Use for config switches</li>
+				<li class="fragment">Configuration can be dynamically patched</li>
+				<li class="fragment">Configuration is executed if it is a script</li>
 			</ul>
 		</section>
 
@@ -685,8 +685,8 @@ webpackBundler.watch(200, webpackChangeHandler);
 				<li>gulp serve --env dev --profile geno --instance sparda-n</li>
 			</ul>
 			<ul class="pros">
-				<li>Uses <i>gulp</i> for custom CLI args to patch Webpack config: environment, profile, bank instance</li>
-				<li>Uses own <i>resolver</i> for profiles: VisualVest and MeinInvest may have unique components with same name</li>
+				<li class="fragment">Uses <i>gulp</i> for custom CLI args to patch Webpack config: environment, profile, bank instance</li>
+				<li class="fragment">Uses own <i>resolver</i> for profiles: VisualVest and MeinInvest may have unique components with same name</li>
 			</ul>
 		</section>
 
@@ -695,8 +695,8 @@ webpackBundler.watch(200, webpackChangeHandler);
 				<li>gulp serve --env dev --profile geno --instance psd-nord</li>
 			</ul>
 			<ul class="pros">
-				<li><i>Webpack</i> bundles different configuration files for each profile: VisualVest and MeinInvest</i>
-				<li><i>Gulp</i> provides <i>Webpack</i> with these configuration files and a custom SCSS pipeline for each bank instance</i></li>
+				<li class="fragment"><i>Webpack</i> bundles different configuration files for each profile: VisualVest and MeinInvest</i>
+				<li class="fragment"><i>Gulp</i> provides <i>Webpack</i> with these configuration files and a custom SCSS pipeline for each bank instance</i></li>
 			</ul>
 		</section>
 
@@ -745,10 +745,10 @@ requireAll(require.context('../geno/app', true, /\.geno\.json$/)).map( translati
 		<section>
 			<h3>Recap</h3>
 			<ul class="pros">
-				<li>Use <i>webpack</i> for project setup, bundling, transpilation, asset management, SCSS compilation, ...</li>
-				<li>Use <i>resolvers</i> for shared projects and multi-tenancy</li>
-				<li>Use the <i>Webpack dev server</i>, it is very powerful!</li>
-				<li>Use <i>gulp</i> to provide special webpack configurations (i.e. for dev, tests and dist) and for running tests</li>
+				<li class="fragment">Use <i>webpack</i> for project setup, bundling, transpilation, asset management, SCSS compilation, ...</li>
+				<li class="fragment">Use <i>resolvers</i> for shared projects and multi-tenancy</li>
+				<li class="fragment">Use the <i>Webpack dev server</i>, it is very powerful!</li>
+				<li class="fragment">Use <i>gulp</i> to provide special webpack configurations (i.e. for dev, tests and dist) and for running tests</li>
 			</ul>
 		</section>
 
